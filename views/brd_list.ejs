@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판 목록</title>
+</head>
+<body>
+    <!-- 게시판 목록, 검색, 페이지네이션 , 글쓰기(작성페이지로 요청) -->
+    <!-- form의 아이디 속성 -> 회원인지 아닌지 식별 -->
+    <!-- 선택된 체크박스 게시글만 지우는 기능 별도로 추가, 링크도 달라야 함 -->
+    <form id="board" action="/dbseldel" method="get">
+        <!-- db 데이터만큼 목록 생성 -->
+        <% data.forEach((el, idx) => { %>
+            <div class="lists">
+                <!-- 체크박스 항목을 다중선택해서 데이터를 보낼 때 name 속성에 대괄호 붙여서 사용(배열 형식) -->
+                <!-- value 값 사용한 이유는 해당 게시글 번호로 삭제할 게시글 식별하기 위해 -->
+                <input type="checkbox" name="delOk[]" class="delOk" value="<%- el.num %>">
+                <div><%- el.num %></div>
+                <div><a href="/board/detail/<%- el.num %>"><%- el.title %></a></div>
+                <div><%- el.author %></div>
+            </div>
+        <% }) %>
+        <!-- 체크박스를 통해서 하나 ~ 여러 개 동시체크해서 제거 가능 -->
+        <button type="submit" id="selectDelete">선택삭제</button>
+        <input type="checkbox" id="selectToggle"><label for="selectToggle">전체선택/전체해제</label>
+    </form>
+    <!-- 글쓰기 페이지로 이동 -->
+    <a href="/board/insert">글쓰기</a>
+    <script>
+        // 체크박스 체크 시 -> 해당 input 태그들의 value 값을 서버에 전달
+        // 체크박스에 하나라도 체크되어있지 않다면 페이지 이동 막아야 함
+        // 실제 데이터베이스로 접근하기 전에 화면 단계(화면단)에서 검증(validation)
+        const delBtn = document.querySelector("#selectDelete");
+        const board = document.querySelector("#board");
+        //form 태그 전용 함수 submit()
+        delBtn.addEventListener("click",(event)=>{
+            // event.preventDefault();
+            // board.submit();
+            let chkboxes = document.querySelectorAll(".delOk:checked");
+            //window.confirm(""); //경고창처럼 나오는 확인창. 변수로 지정하고 가면 논리값이 저장됨
+            let result = window.confirm("선택한 항목들을 삭제합니다.");
+            if(result){
+                if(chkboxes.length > 0){
+                    alert("선택한 항목들을 삭제하였습니다");
+                    board.submit(); //전송기능 수행
+                }
+                else{
+                    alert("선택한 항목이 없습니다!");
+                    event.preventDefault(); //전송기능 미수행(페이지이동 막음)
+                }
+            }
+            else{
+                alert("삭제를 취소하였습니다.");
+                event.preventDefault(); //전송기능 미수행(페이지이동 막음)
+            }
+        })
+
+        // 전체선택, 전체삭제 체크박스 이벤트
+        const toggle = document.querySelector("#selectToggle"); 
+        // 개별 체크박스들
+        const delOk = document.querySelectorAll(".delOk");
+        toggle.addEventListener("click",()=>{
+            // 전체선택, 전체삭제 체크박스의 체크 상태를 변수에 담아줌
+            let checkToggle = toggle.checked;
+            //체크박스 클래스 이름에 해당하는 태그 전부 선택
+            delOk.forEach((item, idx)=>{
+                item.checked = checkToggle;
+            });  
+        })
+        // 전부 선택 상태에서 하나를 빼도 전체선택/전체삭제 체크박스 없어지면 선택한 체크박스만 삭제하기가 곤란해짐...
+    </script>
+   
+</body>
+</html>

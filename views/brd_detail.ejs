@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글</title>
+</head>
+<body>
+    <!-- 게시글 데이터, 수정, 삭제 버튼 (회원 기능에 따라 화면표시 여부 결정), 목록으로 이동-->
+    <!-- 데이터베이스에서 해당 게시글에 해당하는 데이터만 꺼내와서 화면에 표시 -->
+    <div>
+        <p><%- data.num %></p>
+        <p><%- data.title %></p>
+        <p><%- data.author %></p>
+        <p><%- data.content %></p>
+        <a href="/board/list">목록</a>
+        <a href="/board/update/<%- data.num %>">수정</a>
+        <a href="/dbdelete/<%- data.num %>">삭제</a>
+    </div>
+    <!-- 수정 버튼 - 수정할 수 있는 화면 페이지로 요청 -->
+</body>
+</html>

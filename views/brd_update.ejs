@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 수정</title>
+</head>
+<body>
+    <!-- 글 수정 페이지, 이미 작성되어있던 데이터들을 input 태그나 textarea 태그에 보여주는 작업 -->
+    <form action="/dbupdate" method="post">
+        <input type="text" name="title" value="<%- data.title %>">
+        <input type="text" name="author" value="<%- data.author %>">
+        <textarea name="content"><%- data.content %></textarea>
+        <input type="hidden" name="num" value="<%- data.num %>">
+        <button type="submit">작성하기</button>
+    </form>
+    <!-- 입력 후 수정 버튼을 누르면 데이터베이스에 수정요청 -->
+</body>
+</html>

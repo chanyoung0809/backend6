@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글쓰기</title>
+</head>
+<body>
+    <!-- 게시글 작성 페이지, 입력하고 전송 버튼 누르면 데이터베이스에 쓰기 요청 -->
+    <form action="/dbinsert" method="post">
+        <input type="text" name="title">
+        <input type="text" name="author">
+        <textarea name="content"></textarea>
+        <button type="submit">작성하기</button>
+    </form>
+    <!-- 작성 완료 후 만들어진 해당 게시글 상세페이지로 이동 -->
+</body>
+</html>
